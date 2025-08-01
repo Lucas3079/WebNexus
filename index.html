@@ -44,7 +44,7 @@
 <body>
   <div class="container">
     <h2>Sua opinião importa!</h2>
-    <form id="feedbackForm">
+    <form name="feedback_form" method="POST" data-netlify="true" id="feedbackForm">
       <label>1. Como você avalia seu atendimento?</label>
       <select name="atendimento" required>
         <option value="">Selecione</option>
@@ -81,16 +81,6 @@
       Obrigado pelo seu feedback! 💙
     </div>
   </div>
-
-  <script>
-    const form = document.getElementById('feedbackForm');
-    const thankYouMessage = document.getElementById('thankYouMessage');
-
-    form.addEventListener('submit', function(e) {
-      e.preventDefault(); // Impede o envio real do formulário
-      form.style.display = 'none'; // Oculta o formulário
-      thankYouMessage.style.display = 'block'; // Mostra a mensagem
-    });
-  </script>
 </body>
+
 </html>
