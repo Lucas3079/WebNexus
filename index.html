@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sua opinião importa!</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #b2ebf2);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h2 { text-align: center; color: #00796b; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input, select, textarea {
+      width: 100%; padding: 10px; border: 1px solid #b2dfdb;
+      border-radius: 8px; margin-top: 5px; font-size: 14px;
+    }
+    button {
+      margin-top: 20px; width: 100%; padding: 12px;
+      background-color: #00796b; color: white;
+      border: none; border-radius: 8px; font-size: 16px; cursor: pointer;
+    }
+    button:hover { background-color: #004d40; }
+    .thank-you {
+      display: none; text-align: center; color: #004d40; margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Sua opinião importa!</h2>
+    <form id="feedbackForm">
+      <label>1. Como você avalia seu atendimento?</label>
+      <select name="atendimento" required>
+        <option value="">Selecione</option>
+        <option>Excelente</option>
+        <option>Bom</option>
+        <option>Regular</option>
+        <option>Ruim</option>
+      </select>
+
+      <label>2. Você recomendaria nossa loja?</label>
+      <select name="recomendaria" required>
+        <option value="">Selecione</option>
+        <option>Sim</option>
+        <option>Não</option>
+      </select>
+
+      <label>3. Tempo de espera:</label>
+      <select name="espera" required>
+        <option value="">Selecione</option>
+        <option>Rápido</option>
+        <option>Normal</option>
+        <option>Demorado</option>
+      </select>
+
+      <label>4. Como podemos melhorar?</label>
+      <textarea name="melhoria" rows="3" placeholder="Escreva aqui (opcional)"></textarea>
+
+      <label>5. Seu nome (opcional):</label>
+      <input type="text" name="nome" />
+
+      <button type="submit">Enviar feedback</button>
+    </form>
+    <div class="thank-you" id="thankYouMessage">
+      Obrigado pelo seu feedback! 💙
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('feedbackForm');
+    const thankYouMessage = document.getElementById('thankYouMessage');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault(); // Impede o envio real do formulário
+      form.style.display = 'none'; // Oculta o formulário
+      thankYouMessage.style.display = 'block'; // Mostra a mensagem
+    });
+  </script>
+</body>
+</html>
