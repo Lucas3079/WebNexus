@@ -81,6 +81,46 @@
       Obrigado pelo seu feedback! 💙
     </div>
   </div>
+  <script>
+  const form = document.getElementById('feedbackForm');
+  const thankYouMessage = document.getElementById('thankYouMessage');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault(); // Impede o envio padrão do formulário
+
+    const formData = new FormData(form);
+    const data = {};
+    for (const [key, value] of formData.entries()) {
+        data[key] = value;
+    }
+
+    try {
+        // Envia os dados para a sua Netlify Function
+        // O nome da função é o nome do arquivo, sem a extensão e no caminho /api/
+        // Então, submit-form.js vira /.netlify/functions/submit-form
+        const response = await fetch('/.netlify/functions/submit-form', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // Indicamos que estamos enviando JSON
+            },
+            body: JSON.stringify(data) // Converte os dados para JSON
+        });
+
+        if (response.ok) {
+            form.style.display = 'none'; // Oculta o formulário
+            thankYouMessage.style.display = 'block'; // Mostra a mensagem de agradecimento
+        } else {
+            alert('Houve um erro ao enviar seu feedback. Tente novamente.');
+            console.error('Erro ao enviar feedback:', await response.text());
+        }
+    } catch (error) {
+        alert('Ocorreu um erro de conexão. Tente novamente.');
+        console.error('Erro de rede:', error);
+    }
+  });
+</script>
+
 </body>
 
 </html>
+
