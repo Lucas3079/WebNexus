@@ -1,4 +1,4 @@
-const fetch = require('node-fetch'); // Usado para fazer requisições HTTP
+const fetch = require('node-fetch').default; // Usado para fazer requisições HTTP
 
 exports.handler = async function(event, context) {
   if (event.httpMethod !== 'POST') {
