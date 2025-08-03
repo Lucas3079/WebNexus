@@ -6,7 +6,7 @@ exports.handler = async function(event, context) {
   }
 
   // **Substitua este URL pelo "URL do app da web" que você copiou do Google Apps Script no Passo 2.4**
-  const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzdpeSWXVXBWo7dVeGZ2XBXevQW7QAFNu6qMjSrbzmlxfJOmsE7Am04VpY7mlAns-lS/exec';
+  const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwkkY7jjbUX3SpdP6Q80i9vNb7udBI-mCsk1GWAAC8_93UefUOFNn4QIevuKC79VZkn/exec';
 
   try {
     const formData = JSON.parse(event.body);
