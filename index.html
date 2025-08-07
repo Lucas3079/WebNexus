@@ -11,7 +11,7 @@
       margin: 0;
       padding: 0;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
       min-height: 100vh;
     }
@@ -22,7 +22,6 @@
       max-width: 400px;
       width: 90%;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      margin-top: 40px;
     }
     h2 { text-align: center; color: #00796b; }
     label { display: block; margin-top: 15px; font-weight: bold; }
@@ -39,21 +38,6 @@
     .thank-you {
       display: none; text-align: center; color: #004d40; margin-top: 20px;
       font-size: 18px;
-    }
-    #politica {
-      max-width: 600px;
-      margin: 60px 20px;
-      font-size: 14px;
-      padding: 20px;
-      background: #ffffffcc;
-      border-radius: 10px;
-      color: #333;
-    }
-    #politica h3 {
-      color: #00796b;
-    }
-    #politica ul {
-      padding-left: 20px;
     }
   </style>
 </head>
@@ -91,88 +75,52 @@
       <label>5. Seu nome (opcional):</label>
       <input type="text" name="nome" />
 
-      <p style="font-size: 12px; margin-top: 10px;">
-        Ao enviar este formulário, você concorda com nossa
-        <a href="#politica" style="color: #00796b; text-decoration: underline;">Política de Privacidade</a>.
-      </p>
-
       <button type="submit">Enviar feedback</button>
     </form>
     <div class="thank-you" id="thankYouMessage">
       Obrigado pelo seu feedback! 💙
     </div>
   </div>
-
   <script>
-    const form = document.getElementById('feedbackForm');
-    const thankYouMessage = document.getElementById('thankYouMessage');
+  const form = document.getElementById('feedbackForm');
+  const thankYouMessage = document.getElementById('thankYouMessage');
 
-    form.addEventListener('submit', async function(e) {
-      e.preventDefault();
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault(); // Impede o envio padrão do formulário
 
-      const formData = new FormData(form);
-      const data = {};
-      for (const [key, value] of formData.entries()) {
+    const formData = new FormData(form);
+    const data = {};
+    for (const [key, value] of formData.entries()) {
         data[key] = value;
-      }
+    }
 
-      try {
+    try {
+        // Envia os dados para a sua Netlify Function
+        // O nome da função é o nome do arquivo, sem a extensão e no caminho /api/
+        // Então, submit-form.js vira /.netlify/functions/submit-form
         const response = await fetch('/.netlify/functions/submit-form', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // Indicamos que estamos enviando JSON
+            },
+            body: JSON.stringify(data) // Converte os dados para JSON
         });
 
         if (response.ok) {
-          form.style.display = 'none';
-          thankYouMessage.style.display = 'block';
+            form.style.display = 'none'; // Oculta o formulário
+            thankYouMessage.style.display = 'block'; // Mostra a mensagem de agradecimento
         } else {
-          alert('Houve um erro ao enviar seu feedback. Tente novamente.');
-          console.error('Erro ao enviar feedback:', await response.text());
+            alert('Houve um erro ao enviar seu feedback. Tente novamente.');
+            console.error('Erro ao enviar feedback:', await response.text());
         }
-      } catch (error) {
+    } catch (error) {
         alert('Ocorreu um erro de conexão. Tente novamente.');
         console.error('Erro de rede:', error);
-      }
-    });
-  </script>
-
-  <div id="politica">
-    <h3>Política de Privacidade</h3>
-    <p><strong>Última atualização:</strong> 07 de agosto de 2025</p>
-
-    <p>Esta Política de Privacidade descreve como coletamos, usamos e armazenamos os dados fornecidos por você neste formulário.</p>
-
-    <h4>1. Dados Coletados</h4>
-    <p>Coletamos as respostas fornecidas no formulário, incluindo:</p>
-    <ul>
-      <li>Como você avalia seu atendimento?</li>
-      <li>Você recomendaria nossa loja?</li>
-      <li>Tempo de espera</li>
-      <li>Como podemos melhorar?</li>
-      <li>Seu nome (opcional)</li>
-    </ul>
-
-    <h4>2. Finalidade</h4>
-    <p>Os dados são usados exclusivamente para fins estatísticos e para melhorar os serviços da loja.</p>
-
-    <h4>3. Armazenamento</h4>
-    <p>As respostas são armazenadas de forma segura em uma planilha do Google Sheets acessível apenas pelos responsáveis pela análise.</p>
-
-    <h4>4. Compartilhamento</h4>
-    <p>Os dados não são compartilhados com terceiros, exceto com a própria loja que está sendo avaliada.</p>
-
-    <h4>5. Direitos do Usuário</h4>
-    <p>Você pode solicitar a exclusão ou modificação dos seus dados a qualquer momento, entrando em contato por e-mail: <strong>contato.webnexus@gmail.com</strong>.</p>
-
-    <h4>6. Consentimento</h4>
-    <p>Ao enviar o formulário, você declara estar ciente e de acordo com esta Política de Privacidade.</p>
-  </div>
+    }
+  });
+</script>
 
 </body>
+
 </html>
-
-
 
