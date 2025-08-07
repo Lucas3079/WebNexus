@@ -11,7 +11,7 @@
       margin: 0;
       padding: 0;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
       min-height: 100vh;
     }
@@ -22,6 +22,7 @@
       max-width: 400px;
       width: 90%;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-top: 40px;
     }
     h2 { text-align: center; color: #00796b; }
     label { display: block; margin-top: 15px; font-weight: bold; }
@@ -75,52 +76,56 @@
       <label>5. Seu nome (opcional):</label>
       <input type="text" name="nome" />
 
+      <p style="font-size: 12px; margin-top: 10px;">
+        Ao enviar este formulário, você concorda com nossa
+        <a href="https://sitewebnexus.42web.io/" target="_blank" rel="noopener noreferrer" style="color: #00796b; text-decoration: underline;">
+          Política de Privacidade
+        </a>.
+      </p>
+
       <button type="submit">Enviar feedback</button>
     </form>
     <div class="thank-you" id="thankYouMessage">
       Obrigado pelo seu feedback! 💙
     </div>
   </div>
+
   <script>
-  const form = document.getElementById('feedbackForm');
-  const thankYouMessage = document.getElementById('thankYouMessage');
+    const form = document.getElementById('feedbackForm');
+    const thankYouMessage = document.getElementById('thankYouMessage');
 
-  form.addEventListener('submit', async function(e) {
-    e.preventDefault(); // Impede o envio padrão do formulário
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
 
-    const formData = new FormData(form);
-    const data = {};
-    for (const [key, value] of formData.entries()) {
+      const formData = new FormData(form);
+      const data = {};
+      for (const [key, value] of formData.entries()) {
         data[key] = value;
-    }
+      }
 
-    try {
-        // Envia os dados para a sua Netlify Function
-        // O nome da função é o nome do arquivo, sem a extensão e no caminho /api/
-        // Então, submit-form.js vira /.netlify/functions/submit-form
+      try {
         const response = await fetch('/.netlify/functions/submit-form', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json' // Indicamos que estamos enviando JSON
-            },
-            body: JSON.stringify(data) // Converte os dados para JSON
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
         });
 
         if (response.ok) {
-            form.style.display = 'none'; // Oculta o formulário
-            thankYouMessage.style.display = 'block'; // Mostra a mensagem de agradecimento
+          form.style.display = 'none';
+          thankYouMessage.style.display = 'block';
         } else {
-            alert('Houve um erro ao enviar seu feedback. Tente novamente.');
-            console.error('Erro ao enviar feedback:', await response.text());
+          alert('Houve um erro ao enviar seu feedback. Tente novamente.');
+          console.error('Erro ao enviar feedback:', await response.text());
         }
-    } catch (error) {
+      } catch (error) {
         alert('Ocorreu um erro de conexão. Tente novamente.');
         console.error('Erro de rede:', error);
-    }
-  });
-</script>
-
+      }
+    });
+  </script>
 </body>
-
 </html>
+
 
